@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from utils import crawl_html_doc
+from utils import crawl_html_doc, query_one_category, insert_keywords_one_category
 import json
 
 keyword_set = set()
@@ -93,8 +93,10 @@ def crawl_keyword_by_category_short(category):
 
 def crawl_keyword_by_category_list_short(category_list):
     """抓取一个分类列表显示的全部词条"""
+
     all_keywords = []
     for category in category_list:
+        print(category)
         all_keywords.extend(crawl_keyword_by_category_short(category))
     return all_keywords
 
@@ -112,11 +114,22 @@ def crawl_all_keywords_short():
     return all_keywords
 
 
+def crawl_keywords_and_insert(category):
+    keyword_set.clear()
+    big_category = query_one_category(category)
+    print(big_category)
+    all_keywords = crawl_keyword_by_category_list_short(big_category['sub_cat'][:2])
+    all_keywords = list(set(all_keywords))
+    keyword_dict = {'cat': big_category['cat'], 'keywords': all_keywords}
+    insert_keywords_one_category(keyword_dict)
+
+
 if __name__ == '__main__':
     # all_keywords = crawl_keyword_by_category_short('政治人物')
     # print(len(all_keywords))
     # print(json.dumps(all_keywords, ensure_ascii=False, indent=4))
-    all_keywords = crawl_all_keywords_short()
-    print(len(all_keywords))
-    print(json.dumps(all_keywords, ensure_ascii=False, indent=4))
-    print(len(all_keywords[0]['keywords']))
+    # all_keywords = crawl_all_keywords_short()
+    # print(len(all_keywords))
+    # print(json.dumps(all_keywords, ensure_ascii=False, indent=4))
+    # print(len(all_keywords[0]['keywords']))
+    crawl_keywords_and_insert('人物')

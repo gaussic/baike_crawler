@@ -118,7 +118,7 @@ def crawl_keywords_and_insert(category):
     keyword_set.clear()
     big_category = query_one_category(category)
     print(big_category)
-    all_keywords = crawl_keyword_by_category_list_short(big_category['sub_cat'][:2])
+    all_keywords = crawl_keyword_by_category_list_short(big_category['sub_cat'])
     all_keywords = list(set(all_keywords))
     keyword_dict = {'cat': big_category['cat'], 'keywords': all_keywords}
     insert_keywords_one_category(keyword_dict)
@@ -132,4 +132,4 @@ if __name__ == '__main__':
     # print(len(all_keywords))
     # print(json.dumps(all_keywords, ensure_ascii=False, indent=4))
     # print(len(all_keywords[0]['keywords']))
-    crawl_keywords_and_insert('人物')
+    crawl_keywords_and_insert('生活')

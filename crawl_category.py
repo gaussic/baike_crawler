@@ -53,7 +53,6 @@ def crawl_categories_hierarchical(depth=10):
     """生成层级分类列表"""
     cat_set.clear()
     root_categories = crawl_root_categories()
-    root_categories = [{'cat': '人物', 'sub_cat': ['政治人物', '历史人物']}]
     categories = []
     for rc in root_categories:
         print('-------' + rc['cat'] + '----------')
@@ -121,5 +120,5 @@ def crawl_categories_flat(depth=10):
 
 
 if __name__ == '__main__':
-    # crawl_categories_hierarchical()
-    crawl_categories_flat()
+    crawl_categories_hierarchical()
+    # crawl_categories_flat()

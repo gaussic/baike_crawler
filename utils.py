@@ -23,6 +23,15 @@ def insert_keywords_one_category(keywords):
         print(e)
 
 
+def insert_keywords_detail(keyword):
+    client = MongoClient('mongodb://121.42.182.174:27017')
+    db = client.baike
+    try:
+        db.keyword_detail.insert_one(keyword)
+    except Exception as e:
+        print(e)
+
+
 def query_categories():
     client = MongoClient('mongodb://121.42.182.174:27017')
     db = client.baike
@@ -34,6 +43,13 @@ def query_one_category(category):
     client = MongoClient('mongodb://121.42.182.174:27017')
     db = client.baike
     result = db.category.find({'cat': category}, projection={'_id': False})
+    return list(result)[0]
+
+
+def query_keywords_one_category(category):
+    client = MongoClient('mongodb://121.42.182.174:27017')
+    db = client.baike
+    result = db.keyword.find({'cat': category}, projection={'_id': False})
     return list(result)[0]
 
 

@@ -49,10 +49,10 @@ def crawl_sub_categories_hierarchical(category, depth):
     return subcat_list
 
 
-def crawl_categories_hierarchical(depth=6):
+def crawl_categories_hierarchical(depth=10):
     """生成层级分类列表"""
     cat_set.clear()
-    root_categories = crawl_root_categories()[:1]
+    root_categories = crawl_root_categories()
     root_categories = [{'cat': '人物', 'sub_cat': ['政治人物', '历史人物']}]
     categories = []
     for rc in root_categories:
@@ -88,15 +88,14 @@ def crawl_sub_categories_flat(category, depth):
             continue
         cat_set.add(sub_cat)
         sub_c = crawl_sub_categories_flat(sub_cat, depth - 1)
+        subcat_list.append(sub_cat)
         if len(sub_c) != 0:
             subcat_list.extend(sub_c)
-        else:
-            subcat_list.append(sub_cat)
         print('Done: ' + sub_cat + ', depth=' + str(depth))
     return subcat_list
 
 
-def crawl_categories_flat(depth=6):
+def crawl_categories_flat(depth=10):
     """生层平级分类列表"""
     cat_set.clear()
     root_categories = crawl_root_categories()
@@ -105,12 +104,12 @@ def crawl_categories_flat(depth=6):
     for rc in root_categories:
         print('-------' + rc['cat'] + '----------')
         sub_cat = []
-        sub_cat.extend(rc['sub_cat'])
         for rc_sub in rc['sub_cat']:
             if rc_sub in cat_set:  # 去重
                 continue
             cat_set.add(rc_sub)
             sub_categories = crawl_sub_categories_flat(rc_sub, depth)
+            sub_cat.append(rc_sub)
             sub_cat.extend(sub_categories)
         if len(sub_cat) != 0:
             categories.append({'cat': rc['cat'], 'sub_cat': sub_cat})
@@ -122,5 +121,5 @@ def crawl_categories_flat(depth=6):
 
 
 if __name__ == '__main__':
-    crawl_categories_hierarchical(2)
-    # crawl_categories_flat()
+    # crawl_categories_hierarchical()
+    crawl_categories_flat()

@@ -32,4 +32,4 @@ def crawl_keywords_one_category(category):
 if __name__ == '__main__':
     # detail = crawl_one_keyword('天堂')
     # print(detail)
-    crawl_keywords_one_category('人物')
+    crawl_keywords_one_category('历史')
